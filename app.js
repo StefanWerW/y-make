@@ -20,8 +20,8 @@ fs.readFile('client_secret.json', function processClientSecrets(err, content) {
 });
 
 function cbTest(o2c){
-  console.log("callback");
-  console.log(o2c);
+  //console.log("callback");
+  //console.log(o2c);
 
 
   var ResumableUpload = require('node-youtube-resumable-upload');

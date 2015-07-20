@@ -1,0 +1,26 @@
+{
+  "name": "y-make",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StefanWerW/y-make.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StefanWerW/y-make/issues"
+  },
+  "homepage": "https://github.com/StefanWerW/y-make#readme",
+  "dependencies": {
+    "ffmpeg": "0.0.4",
+    "google-auth-library": "^0.9.6",
+    "googleapis": "^2.1.1",
+    "node-youtube-resumable-upload": "^0.1.0",
+    "youtube-dl": "^1.10.5"
+  }
+}

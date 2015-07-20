@@ -10,7 +10,7 @@ var video = ytdl('http://www.youtube.com/watch?v=UX6ncLjFzzA', []);//,
 
 var size = 0;
 video.on('info', function(info) {
-  console.log(info);
+  //console.log(info);
   size = info.size;
   console.log('Got video info');
   console.log('saving to ' + info._filename);

@@ -2,6 +2,7 @@
 var downloader = require('./vid-downloader');
 var uploader = require('./vid-uploader');
 var path = require('path');
+var fs = require('fs');
 
 
 var VIDEOS_FOLDER = "videos";
@@ -17,6 +18,7 @@ exports.start = function(info){
     console.log('DOWN SUCCESS');
     uploader.upload(info, function(){console.log('UPLOAD ERROR CB')}, function(){
       console.log('UPLOAD SUCCESS');
+      fs.unlink(vid_path);
     });
   });
 

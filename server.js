@@ -1,7 +1,9 @@
 var express = require('express');
 var copier = require('./vid-copier');
+var cors = require('cors');
 var app = express();
 
+app.use(cors());
 
 
 app.get('/video', function(req, res){

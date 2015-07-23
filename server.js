@@ -4,7 +4,7 @@ var app = express();
 
 
 
-app.post('/video', function(req, res){
+app.get('/video', function(req, res){
   var info = req.query;
   console.log('recieved POST VIDEO');
   res.send('recieved Command')

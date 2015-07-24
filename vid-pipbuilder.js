@@ -24,19 +24,19 @@ exports.piptest = function(filepaths, endcallback){
           .complexFilter([
              // Rescale input stream into stream 'rescaled'
              {
-               filter: 'resize', options: 'scale=640:480',
+               filter: 'scale', options: '640:480',
                inputs: '0:v', outputs: 'a'
              },
              {
-               filter: 'resize', options: 'scale=640:480',
+               filter: 'scale', options: '640:480',
                inputs: '1:v', outputs: 'b'
              },
              {
-               filter: 'resize', options: 'scale=640:480',
+               filter: 'scale', options: '640:480',
                inputs: '2:v', outputs: 'c'
              },
              {
-               filter: 'resize', options: 'scale=640:480',
+               filter: 'scale', options: '640:480',
                inputs: '3:v', outputs: 'd'
              },
 

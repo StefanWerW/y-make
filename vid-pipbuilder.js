@@ -64,6 +64,6 @@ exports.piptest = function(filepath){
                filter: 'overlay', options: { x: '2*w', y: 0 },
                inputs: ['redgreen', 'blue'], outputs: 'output'
              },
-           ], 'output');
+           ], 'output')
           .save("videos/output.mp4");
 }

@@ -28,7 +28,7 @@ downloader.download(info.v0, function(){console.log('error');}, function(){
             //fs.unlink(vid_path);
           });
         });
-      }
-    }
-  }
+      })
+    })
+  })
 });

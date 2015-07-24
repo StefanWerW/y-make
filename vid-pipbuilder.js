@@ -11,6 +11,9 @@ exports.piptest = function(filepath){
           .on('progress', function(progress) {
             console.log('Processing: ' + progress.percent + '% done');
           })
+          .on('error', function(err, stdout, stderr) {
+            console.log('Cannot process video: ' + err.message);
+          })
           .on('end', function() {
             console.log('Transcoding succeeded !');
           })
@@ -61,6 +64,6 @@ exports.piptest = function(filepath){
                filter: 'overlay', options: { x: '2*w', y: 0 },
                inputs: ['redgreen', 'blue'], outputs: 'output'
              },
-           ])
+           ], 'output');
           .save("videos/output.mp4");
 }

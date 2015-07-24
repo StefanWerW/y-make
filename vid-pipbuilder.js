@@ -1,9 +1,12 @@
 var ffmpeg = require('fluent-ffmpeg');
 
 
-exports.piptest = function(filepath){
+exports.piptest = function(filepaths, endcallback){
   var command = ffmpeg()
-          .input(filepath)
+          .input(filepaths.v0.vid_path)
+          .input(filepaths.v1.vid_path)
+          .input(filepaths.v2.vid_path)
+          .input(filepaths.v3.vid_path)
           .duration(30)
           .on('start', function(commandLine) {
             console.log('Spawned Ffmpeg with command: ' + commandLine);
@@ -16,54 +19,46 @@ exports.piptest = function(filepath){
           })
           .on('end', function() {
             console.log('Transcoding succeeded !');
+            endcallback();
           })
           .complexFilter([
              // Rescale input stream into stream 'rescaled'
-             'scale=640:480[rescaled]',
-
-             // Duplicate rescaled stream 3 times into streams a, b, and c
              {
-               filter: 'split', options: '3',
-               inputs: 'rescaled', outputs: ['a', 'b', 'c']
+               filter: 'resize', options: 'scale=640:480',
+               inputs: '0:v', outputs: 'a'
              },
-
-             // Create stream 'red' by removing green and blue channels from stream 'a'
              {
-               filter: 'lutrgb', options: { g: 0, b: 0 },
-               inputs: 'a', outputs: 'red'
+               filter: 'resize', options: 'scale=640:480',
+               inputs: '1:v', outputs: 'b'
              },
-
-             // Create stream 'green' by removing red and blue channels from stream 'b'
              {
-               filter: 'lutrgb', options: { r: 0, b: 0 },
-               inputs: 'b', outputs: 'green'
+               filter: 'resize', options: 'scale=640:480',
+               inputs: '2:v', outputs: 'c'
              },
-
-             // Create stream 'blue' by removing red and green channels from stream 'c'
              {
-               filter: 'lutrgb', options: { r: 0, g: 0 },
-               inputs: 'c', outputs: 'blue'
+               filter: 'resize', options: 'scale=640:480',
+               inputs: '3:v', outputs: 'd'
              },
 
              // Pad stream 'red' to 3x width, keeping the video on the left,
              // and name output 'padded'
-             {
-               filter: 'pad', options: { w: 'iw*3', h: 'ih' },
-               inputs: 'red', outputs: 'padded'
-             },
+
 
              // Overlay 'green' onto 'padded', moving it to the center,
              // and name output 'redgreen'
              {
-               filter: 'overlay', options: { x: 'w', y: 0 },
-               inputs: ['padded', 'green'], outputs: 'redgreen'
+               filter: 'overlay', options: { x: 'w', y: 'h*2' },
+               inputs: ['a', 'b'], outputs: 'ab'
              },
 
-             // Overlay 'blue' onto 'redgreen', moving it to the right
              {
-               filter: 'overlay', options: { x: '2*w', y: 0 },
-               inputs: ['redgreen', 'blue'], outputs: 'output'
+               filter: 'overlay', options: { x: 'w*2', y: 'h' },
+               inputs: ['ab', 'c'], outputs: 'abc'
+             },
+             {
+               filter: 'overlay', options: { x: 'w*2', y: 'h*2' },
+               inputs: ['abc', 'd'], outputs: 'output'
              },
            ], 'output')
-          .save("videos/output.mp4");
+          .save(filepaths.vid_path);
 }

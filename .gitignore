@@ -27,4 +27,3 @@ build/Release
 node_modules
 
 client_secret.json
-*.mp4

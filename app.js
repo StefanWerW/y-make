@@ -11,7 +11,7 @@ var info = {
   v1:{ url:"https://www.youtube.com/watch?v=gpijNsFF_Wo", vid_path:path.join(__dirname, VIDEOS_FOLDER, '2'+'.mp4')},
   v2:{ url:"https://www.youtube.com/watch?v=QVW2o_7jWos", vid_path:path.join(__dirname, VIDEOS_FOLDER, '2'+'.mp4')},
   v3:{ url:"https://www.youtube.com/watch?v=U2_XLDXnJzs", vid_path:path.join(__dirname, VIDEOS_FOLDER, '2'+'.mp4')},
-  vid_path:"output.mp4"
+  vid_path:"output.mp4",
   title: "test",
   description: "Teste description"
 };

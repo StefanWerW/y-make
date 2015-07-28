@@ -24,7 +24,7 @@ exports.piptest = function(filepaths, endcallback){
           .complexFilter([
              // Rescale input stream into stream 'rescaled'
 
-             'nullsrc=size=1280x720 [background]',
+             //'nullsrc=size=1280x720 [background]',
 
              {
                filter: 'scale', options: '640x480',
@@ -44,20 +44,20 @@ exports.piptest = function(filepaths, endcallback){
              },
 
              {
-               filter: 'overlay', options: { x: '0', y: '0' },
-               inputs: ['background', 'a'], outputs: 'aback'
+               filter: 'pad', options: { w: 'iw*2', h: 'ih*2' },
+               inputs: 'a', outputs: 'padded'
              },
              {
-               filter: 'overlay', options: { x: 'w', y: 'h*2' },
-               inputs: ['aback', 'b'], outputs: 'ab'
+               filter: 'overlay', options: { x: '0', y: 'h' },
+               inputs: ['padded', 'b'], outputs: 'ab'
              },
 
              {
-               filter: 'overlay', options: { x: 'w*2', y: 'h' },
+               filter: 'overlay', options: { x: 'w', y: '0' },
                inputs: ['ab', 'c'], outputs: 'abc'
              },
              {
-               filter: 'overlay', options: { x: 'w*2', y: 'h*2' },
+               filter: 'overlay', options: { x: 'w', y: 'h' },
                inputs: ['abc', 'd'], outputs: 'output'
              },
            ], 'output')

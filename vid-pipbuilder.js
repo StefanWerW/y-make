@@ -23,32 +23,33 @@ exports.piptest = function(filepaths, endcallback){
           })
           .complexFilter([
              // Rescale input stream into stream 'rescaled'
+
+             'nullsrc=size=1280x720 [background]',
+
              {
-               filter: 'scale', options: '640:480',
+               filter: 'scale', options: '640x480',
                inputs: '0:v', outputs: 'a'
              },
              {
-               filter: 'scale', options: '640:480',
+               filter: 'scale', options: '640x480',
                inputs: '1:v', outputs: 'b'
              },
              {
-               filter: 'scale', options: '640:480',
+               filter: 'scale', options: '640x480',
                inputs: '2:v', outputs: 'c'
              },
              {
-               filter: 'scale', options: '640:480',
+               filter: 'scale', options: '640x480',
                inputs: '3:v', outputs: 'd'
              },
 
-             // Pad stream 'red' to 3x width, keeping the video on the left,
-             // and name output 'padded'
-
-
-             // Overlay 'green' onto 'padded', moving it to the center,
-             // and name output 'redgreen'
+             {
+               filter: 'overlay', options: { x: '0', y: '0' },
+               inputs: ['background', 'a'], outputs: 'aback'
+             },
              {
                filter: 'overlay', options: { x: 'w', y: 'h*2' },
-               inputs: ['a', 'b'], outputs: 'ab'
+               inputs: ['aback', 'b'], outputs: 'ab'
              },
 
              {

@@ -17,7 +17,6 @@ fs.readFile('client_secret.json', function processClientSecrets(err, content) {
   // Drive API.
   authorize(JSON.parse(content), function(info){
     console.log('authorize complete');
-    authorizedInfo = info;
   });
 });
 

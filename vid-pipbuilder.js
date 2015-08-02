@@ -70,7 +70,7 @@ exports.pipWithForeground = function(info, endcallback){
              },
              {
                filter: 'overlay', options: {x:0, y:0},
-               input: ['abcd', 'fore'], output: 'output'
+               inputs: ['abcd', 'fore'], outputs: 'output'
              },
            ], 'output')
           .save(info.vid_path);

@@ -29,19 +29,19 @@ exports.pipWithForeground = function(info, endcallback){
 
              //SCALE
              {
-               filter: 'scale', options: '640x480',
+               filter: 'scale', options: '640x360',
                inputs: '0:v', outputs: 'a'
              },
              {
-               filter: 'scale', options: '640x480',
+               filter: 'scale', options: '640x360',
                inputs: '1:v', outputs: 'b'
              },
              {
-               filter: 'scale', options: '640x480',
+               filter: 'scale', options: '640x360',
                inputs: '2:v', outputs: 'c'
              },
              {
-               filter: 'scale', options: '640x480',
+               filter: 'scale', options: '640x360',
                inputs: '3:v', outputs: 'd'
              },
              {
@@ -69,7 +69,7 @@ exports.pipWithForeground = function(info, endcallback){
                inputs: ['abc', 'd'], outputs: 'abcd'
              },
              {
-               filter: 'overlay', options: {},
+               filter: 'overlay', options: {x: '0', y: '0'},
                inputs: ['abcd', 'fore'], outputs: 'output'
              },
            ], 'output')

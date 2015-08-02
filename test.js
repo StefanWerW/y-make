@@ -13,7 +13,9 @@ var path = require('path');
   if (!err) console.log(' hooray! ');
   else console.log(err);
 });*/
-var a = moment().utc().subtract(1, 'weeks').startOf('hour');
-b = moment(a).subtract(4, 'hours');
-console.log(a.format("MMM Do YYYY, h a"));
-console.log(b.format("Do h a"));
+
+setInterval(testPrint, 1000*15);
+
+function testPrint(){
+  console.log(moment().format());
+}

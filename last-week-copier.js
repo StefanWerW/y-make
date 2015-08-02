@@ -43,12 +43,13 @@ require('./youtube-get-tokens').get(function(auth_info){
       ],
       vid_path:"output.mp4",
       title: createTitle(data),
-      description: createDescription(data)
+      description: createDescription(data),
     };
+    download_info.foreground = path.join(__dirname, IMAGES_FOLDER, download_info.title + '.png');
 
     require('./vid-downloader').downloadMultiples(download_info, function(){console.log('ERROR ON DOWNLOAD');}, function(){
       console.log('DOWNLOADES COMPLETES....STARTING CREATE IMAGE');
-      createImageWithTitles(data, path.join(__dirname, IMAGES_FOLDER, download_info.title + '.png'), function(){
+      createImageWithTitles(data, download_info.foreground, function(){
         console.log('IMAGE COMPLETE.....STARING PIP');
         require('./vid-pipbuilder').pipWithForeground(download_info, function(){
           console.log('PIP COMPLETE::::: STARTING UPLOAD');

@@ -45,7 +45,7 @@ exports.pipWithForeground = function(info, endcallback){
                inputs: '3:v', outputs: 'd'
              },
              {
-               filter: 'scale', options '1280x720',
+               filter: 'scale', options: '1280x720',
                input: '4:v', outputs: 'fore'
              },
 

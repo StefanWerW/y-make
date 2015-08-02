@@ -10,15 +10,16 @@ var youtube;
 var VIDEOS_FOLDER = "videos";
 var IMAGES_FOLDER = "images";
 
-
-
+startCopy();
+console.log('next');
+setInterval(startCopy, 1000*60 *60 *2);
 
 function startCopy(){
   require('./youtube-get-tokens').get(function(auth_info){
     youtube = google.youtube({ version: 'v3', auth: auth_info });
     //Time
     var publishedBefore = moment().utc().subtract(1, 'weeks').startOf('hour');
-    var publishedAfter = moment(publishedBefore).subtract(4, 'hours');
+    var publishedAfter = moment(publishedBefore).subtract(2, 'hours');
 
     youtube.search.list({
       //q: 'dog',
@@ -58,6 +59,8 @@ function startCopy(){
             console.log('PIP COMPLETE::::: STARTING UPLOAD');
             require('./vid-uploader').upload(download_info, auth_info, function(){console.log('ERROR ON UPLOAD');}, function(){
               console.log('DONE EVERYTHING!!!!');
+              clearDatas(download_info);
+              console.log('--------------------------------');
             });
           });
         });
@@ -102,4 +105,12 @@ function createDescription(data){
   });
 
   return description;
+}
+
+function clearDatas(info){
+  info.videos.forEach(function(vid){
+    fs.unlink(vid.vid_path);
+  });
+  fs.unlink(info.vid_path);
+  console.log('cleared data');
 }

@@ -1,13 +1,14 @@
 var ffmpeg = require('fluent-ffmpeg');
 
 
-exports.piptest = function(filepaths, endcallback){
+exports.pipWithForeground = function(info, endcallback){
   var command = ffmpeg()
-          .input(filepaths.v0.vid_path)
-          .input(filepaths.v1.vid_path)
-          .input(filepaths.v2.vid_path)
-          .input(filepaths.v3.vid_path)
-          .duration(30)
+          .input(info.videos[0].vid_path)
+          .input(info.videos[1].vid_path)
+          .input(info.videos[2].vid_path)
+          .input(info.videos[3].vid_path)
+          .input(info.foreground)
+          .duration(28)
           .on('start', function(commandLine) {
             console.log('Spawned Ffmpeg with command: ' + commandLine);
           })
@@ -26,6 +27,7 @@ exports.piptest = function(filepaths, endcallback){
 
              //'nullsrc=size=1280x720 [background]',
 
+             //SCALE
              {
                filter: 'scale', options: '640x480',
                inputs: '0:v', outputs: 'a'
@@ -42,11 +44,17 @@ exports.piptest = function(filepaths, endcallback){
                filter: 'scale', options: '640x480',
                inputs: '3:v', outputs: 'd'
              },
+             {
+               filter: 'scale', options '1280x720',
+               input: '4:v', outputs: 'fore'
+             },
 
+             //PAD
              {
                filter: 'pad', options: { w: 'iw*2', h: 'ih*2' },
                inputs: 'a', outputs: 'padded'
              },
+             //OVERLAY
              {
                filter: 'overlay', options: { x: '0', y: 'h' },
                inputs: ['padded', 'b'], outputs: 'ab'
@@ -58,8 +66,12 @@ exports.piptest = function(filepaths, endcallback){
              },
              {
                filter: 'overlay', options: { x: 'w', y: 'h' },
-               inputs: ['abc', 'd'], outputs: 'output'
+               inputs: ['abc', 'd'], outputs: 'abcd'
+             },
+             {
+               filter: 'overlay', options: {x:0, y:0},
+               input: ['abcd', 'fore'], output: 'output'
              },
            ], 'output')
-          .save(filepaths.vid_path);
+          .save(info.vid_path);
 }

@@ -4,8 +4,9 @@ var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 
 var SCOPES = ['https://www.googleapis.com/auth/youtube'];
-var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-    process.env.USERPROFILE) + '/.credentials/';
+//var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
+//    process.env.USERPROFILE) + '/.credentials/';
+var TOKEN_DIR = (process.execPath) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'youtube-api.json';
 
 

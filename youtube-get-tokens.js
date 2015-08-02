@@ -2,6 +2,8 @@ var fs = require('fs');
 var readline = require('readline');
 var google = require('googleapis');
 var googleAuth = require('google-auth-library');
+var moment = require('moment');
+var gm = require('gm');
 
 var SCOPES = ['https://www.googleapis.com/auth/youtube'];
 //var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
@@ -9,62 +11,23 @@ var SCOPES = ['https://www.googleapis.com/auth/youtube'];
 var TOKEN_DIR = (process.execPath) + '/.credentials/';
 var TOKEN_PATH = TOKEN_DIR + 'youtube-api.json';
 
-//var authorizedInfo = {};
+var youtube;
 
-/*// Load client secrets from a local file.
-fs.readFile('client_secret.json', function processClientSecrets(err, content) {
-  if (err) {
-    console.log('Error loading client secret file: ' + err);
-    return;
-  }
-  // Authorize a client with the loaded credentials, then call the
-  // Drive API.
-  authorize(JSON.parse(content), function(info){
-    console.log('authorize complete');
-    authorizedInfo = info;
-  });
-});*/
-
-
-
-exports.upload = function(info, auth_info, errcallback, endcallback){
-
-
-
-  var ResumableUpload = require('node-youtube-resumable-upload');
-  var resumableUpload = new ResumableUpload(); //create new ResumableUpload
-  resumableUpload.tokens = auth_info.credentials; //Google OAuth2 tokens
-  resumableUpload.filepath = info.vid_path;
-  if(info.tags == undefined) info.tags = ["cool", "video", "super", "youtube"];
-  resumableUpload.metadata = {
-    "snippet": {
-      "title": info.title,
-      "description": info.description,
-      "tags": info.tags,
-      "categoryId": 22
-    },
-      "status": {
-        "privacyStatus": "public",
-        "embeddable": true,
-        "license": "youtube"
+exports.get = function(callback){
+  fs.readFile('client_secret.json', function processClientSecrets(err, content) {
+    if (err) {
+      console.log('Error loading client secret file: ' + err);
+      return;
     }
-  }; //include the snippet and status for the video
-  resumableUpload.monitor = true;
-  resumableUpload.retry = 3; // Maximum retries when upload failed.
-  resumableUpload.initUpload();
-  resumableUpload.on('progress', function(progress) {
-      console.log(progress);
-  });
-  resumableUpload.on('success', function(success) {
-    endcallback();
-  });
-  resumableUpload.on('error', function(error) {
-    console.log('ERROR ON UPLOAD');
-    console.log(error);
-    errcallback();
-
+    // Authorize a client with the loaded credentials, then call the
+    // Drive API.
+    authorize(JSON.parse(content), function(info){
+      callback(info);
+    });
   });
 }
+
+
 
 /**
  * Create an OAuth2 client with the given credentials, and then execute the

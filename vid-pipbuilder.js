@@ -69,7 +69,7 @@ exports.pipWithForeground = function(info, endcallback){
                inputs: ['abc', 'd'], outputs: 'abcd'
              },
              {
-               filter: 'overlay', options: {x:0, y:0},
+               filter: 'overlay', options: {},
                inputs: ['abcd', 'fore'], outputs: 'output'
              },
            ], 'output')

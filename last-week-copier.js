@@ -89,7 +89,7 @@ function createDescription(data){
   var description = "YOUTUBE VIDEOS WEEK RACE \n" ;
   description += "Videos published from: " +  data.publishedAfter.format("MMM Do YYYY, h a") + " to " + data.publishedBefore.format("MMM Do YYYY, h a");
 
-  description = "Please, visit the winners: ";
+  description += "Please, visit the winners: ";
   data.items.forEach(function(vid){
     description += "" + vid.snippet.title + ":  \n";
     description += "https://www.youtube.com/watch?v=" + vid.id.videoId + "\n \n \n";

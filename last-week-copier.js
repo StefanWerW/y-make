@@ -54,7 +54,7 @@ require('./youtube-get-tokens').get(function(auth_info){
         require('./vid-pipbuilder').pipWithForeground(download_info, function(){
           console.log('PIP COMPLETE::::: STARTING UPLOAD');
           require('./vid-uploader').upload(download_info, auth_info, function(){console.log('ERROR ON UPLOAD');}, function(){
-            'DONE EVERYTHING!!!!'
+            console.log('DONE EVERYTHING!!!!');
           });
         });
       });

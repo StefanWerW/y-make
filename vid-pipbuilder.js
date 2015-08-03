@@ -13,7 +13,7 @@ exports.pipWithForeground = function(info, endcallback){
             console.log('Spawned Ffmpeg with command: ' + commandLine);
           })
           .on('progress', function(progress) {
-            console.log('Processing: ' + progress.percent + '% done');
+            //console.log('Processing: ' + progress.percent + '% done');
           })
           .on('error', function(err, stdout, stderr) {
             console.log('Cannot process video: ' + err.message);
